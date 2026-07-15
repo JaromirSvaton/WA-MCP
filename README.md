@@ -4,9 +4,20 @@ Lets Claude read and send WhatsApp messages (DMs and groups) through your own
 WhatsApp account. Uses [Baileys](https://github.com/WhiskeySockets/Baileys)
 (direct WebSocket, no browser) and stores messages locally in SQLite.
 
+## Prerequisites
+
+- **Node.js 20+** - check with `node --version` ([download](https://nodejs.org)).
+- **Claude Desktop** installed ([download](https://claude.ai/download)).
+- **git** to clone the repo (or download the ZIP from GitHub).
+- A phone with **WhatsApp** installed (for the one-time QR link).
+
 ## Setup (3 steps)
 
 ```powershell
+# 0. Clone the repo and enter the folder
+git clone https://github.com/JaromirSvaton/WA-MCP.git
+cd WA-MCP
+
 # 1. Install + build + show the Claude Desktop config for your machine
 npm run setup
 
@@ -21,6 +32,28 @@ npm run login
 
 If the QR code looks garbled in your terminal, run `chcp 65001` first or use
 Windows Terminal.
+
+### Configuring Claude Desktop manually
+
+`npm run setup` (or `npm run print-config`) prints a snippet with absolute paths
+for your machine. It looks like this:
+
+```json
+{
+  "mcpServers": {
+    "whatsapp": {
+      "command": "C:\\Program Files\\nodejs\\node.exe",
+      "args": ["C:\\path\\to\\WA-MCP\\dist\\index.js"]
+    }
+  }
+}
+```
+
+Open `%APPDATA%\Claude\claude_desktop_config.json` (create it if it doesn't
+exist), paste the snippet, and if the file already has an `"mcpServers"` object,
+merge the `"whatsapp"` entry into it. Then fully quit Claude Desktop from the
+system tray and reopen it. You should see the WhatsApp tools available in a new
+chat.
 
 ## Tools exposed to Claude
 
